@@ -29,6 +29,7 @@ model Property {
   city          String
   state         String
   zipCode       String
+  paymentQrCode String?   // QR code for payments
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   userId        String
@@ -103,6 +104,7 @@ enum PaymentType {
 
 enum PaymentStatus {
   PENDING
+  WAITING_APPROVAL
   PAID
   FAILED
   REFUNDED

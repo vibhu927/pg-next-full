@@ -5,6 +5,7 @@ import { LucideEdit, LucideTrash, LucidePlus, LucideSearch, LucideX, LucideHome 
 import { propertiesApi } from "@/src/services/api";
 import { toast } from "react-hot-toast";
 import { MultiStepForm } from "@/src/components/ui/MultiStepForm";
+import QRCode from "react-qr-code";
 
 export default function PropertiesPage() {
   const [properties, setProperties] = useState<any[]>([]);
@@ -12,8 +13,11 @@ export default function PropertiesPage() {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isQrModalOpen, setIsQrModalOpen] = useState(false);
   const [currentProperty, setCurrentProperty] = useState<any>(null);
+  const [qrCodeData, setQrCodeData] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [isGeneratingQr, setIsGeneratingQr] = useState(false);
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     name: "",
@@ -153,6 +157,43 @@ export default function PropertiesPage() {
       occupiedRooms: "",
     });
     setCurrentProperty(null);
+  };
+
+  const generateQrCode = async (propertyId: string) => {
+    try {
+      setIsGeneratingQr(true);
+
+      // Find the property
+      const property = properties.find(p => p.id === propertyId);
+      if (!property) {
+        toast.error("Property not found");
+        return;
+      }
+
+      setCurrentProperty(property);
+
+      // Generate or fetch QR code
+      const response = await fetch(`/api/properties/${propertyId}/qr-code`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to generate QR code');
+      }
+
+      const data = await response.json();
+      setQrCodeData(data.qrCodeData);
+      setIsQrModalOpen(true);
+      toast.success("QR code generated successfully");
+    } catch (err) {
+      console.error("Error generating QR code:", err);
+      toast.error("Failed to generate QR code");
+    } finally {
+      setIsGeneratingQr(false);
+    }
   };
 
   return (
@@ -322,6 +363,16 @@ export default function PropertiesPage() {
                     </p>
                   </div>
                   <div className="flex space-x-1">
+                    <button
+                      type="button"
+                      className="inline-flex items-center rounded-md bg-green-50 p-2 text-green-600 transition-colors hover:bg-green-100 dark:bg-green-900/20 dark:text-green-400 dark:hover:bg-green-900/30"
+                      onClick={() => generateQrCode(property.id)}
+                      title="Generate Payment QR Code"
+                    >
+                      <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+                      </svg>
+                    </button>
                     <button
                       type="button"
                       className="inline-flex items-center rounded-md bg-indigo-50 p-2 text-indigo-600 transition-colors hover:bg-indigo-100 dark:bg-indigo-900/20 dark:text-indigo-400 dark:hover:bg-indigo-900/30"
@@ -798,6 +849,67 @@ export default function PropertiesPage() {
                 </svg>
                 Delete Property
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* QR Code Modal */}
+      {isQrModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-xl dark:bg-gray-800">
+            <div className="mb-6 flex items-center justify-between">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Payment QR Code</h2>
+              <button
+                type="button"
+                className="rounded-full p-2 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-200"
+                onClick={() => setIsQrModalOpen(false)}
+              >
+                <LucideX className="h-5 w-5" />
+              </button>
+            </div>
+
+            <div className="flex flex-col items-center justify-center space-y-6">
+              <p className="text-center text-gray-700 dark:text-gray-300">
+                Use this QR code for payments related to <span className="font-semibold">{currentProperty?.name}</span>.
+              </p>
+
+              <div className="bg-white p-4 rounded-lg">
+                {isGeneratingQr ? (
+                  <div className="h-48 w-48 flex items-center justify-center">
+                    <div className="h-8 w-8 animate-spin rounded-full border-b-2 border-t-2 border-indigo-600"></div>
+                  </div>
+                ) : (
+                  <QRCode
+                    value={qrCodeData || `upi://pay?pa=example@upi&pn=${encodeURIComponent(currentProperty?.name || 'PG Management')}&cu=INR`}
+                    size={200}
+                  />
+                )}
+              </div>
+
+              <p className="text-center text-sm text-gray-600 dark:text-gray-400">
+                Share this QR code with tenants for easy payments. They can scan it using any UPI app.
+              </p>
+
+              <div className="flex justify-center space-x-4 w-full">
+                <button
+                  type="button"
+                  className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+                  onClick={() => setIsQrModalOpen(false)}
+                >
+                  Close
+                </button>
+                <button
+                  type="button"
+                  className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  onClick={() => {
+                    // In a real app, you would implement a download or print function here
+                    toast.success("QR code download feature will be implemented soon");
+                  }}
+                >
+                  Download
+                </button>
+              </div>
             </div>
           </div>
         </div>

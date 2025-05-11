@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { LucideHome, LucideUsers, LucideDoorOpen, LucideBuilding, LucideSettings, LucideLogOut, LucideMenu, LucideX, LucideMoon, LucideSun } from "lucide-react";
+import { LucideHome, LucideUsers, LucideDoorOpen, LucideBuilding, LucideSettings, LucideLogOut, LucideMenu, LucideX, LucideMoon, LucideSun, LucideCreditCard, LucideHelpCircle } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useSession, signOut } from "next-auth/react";
 
@@ -51,7 +51,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     setTheme(theme === "dark" ? "light" : "dark");
   };
 
-  const sidebarItems = [
+  // Define sidebar items based on user role
+  const isAdmin = session?.user?.role === "ADMIN";
+
+  const adminMainItems = [
     {
       href: "/dashboard",
       icon: <LucideHome className="h-5 w-5" />,
@@ -73,11 +76,53 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       label: "Properties",
     },
     {
+      href: "/payments",
+      icon: <LucideCreditCard className="h-5 w-5" />,
+      label: "Payments",
+    },
+  ];
+
+  const adminSecondaryItems = [
+    {
+      href: "/faq",
+      icon: <LucideHelpCircle className="h-5 w-5" />,
+      label: "FAQ",
+    },
+    {
       href: "/settings",
       icon: <LucideSettings className="h-5 w-5" />,
       label: "Settings",
     },
   ];
+
+  const userMainItems = [
+    {
+      href: "/dashboard",
+      icon: <LucideHome className="h-5 w-5" />,
+      label: "Dashboard",
+    },
+    {
+      href: "/payments",
+      icon: <LucideCreditCard className="h-5 w-5" />,
+      label: "Payments",
+    },
+  ];
+
+  const userSecondaryItems = [
+    {
+      href: "/faq",
+      icon: <LucideHelpCircle className="h-5 w-5" />,
+      label: "FAQ",
+    },
+    {
+      href: "/settings",
+      icon: <LucideSettings className="h-5 w-5" />,
+      label: "Settings",
+    },
+  ];
+
+  const mainItems = isAdmin ? adminMainItems : userMainItems;
+  const secondaryItems = isAdmin ? adminSecondaryItems : userSecondaryItems;
 
   return (
     <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
@@ -114,11 +159,31 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
         {/* Navigation */}
         <div className="mt-6 px-3">
+          {/* Main Navigation */}
           <div className="mb-2 px-4 text-xs font-semibold uppercase tracking-wider text-white/50">
             Main
           </div>
           <nav className="space-y-1">
-            {sidebarItems.map((item) => (
+            {mainItems.map((item) => (
+              <SidebarItem
+                key={item.href}
+                href={item.href}
+                icon={item.icon}
+                label={item.label}
+                active={pathname === item.href}
+              />
+            ))}
+          </nav>
+
+          {/* Divider */}
+          <div className="my-6 border-t border-white/10"></div>
+
+          {/* Secondary Navigation */}
+          <div className="mb-2 px-4 text-xs font-semibold uppercase tracking-wider text-white/50">
+            Support
+          </div>
+          <nav className="space-y-1">
+            {secondaryItems.map((item) => (
               <SidebarItem
                 key={item.href}
                 href={item.href}
@@ -173,7 +238,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
             <div className="hidden md:block">
               <h2 className="text-lg font-medium text-gray-800 dark:text-gray-200">
-                {sidebarItems.find(item => pathname === item.href)?.label || "Dashboard"}
+                {[...mainItems, ...secondaryItems].find(item => pathname === item.href)?.label || "Dashboard"}
               </h2>
             </div>
           </div>

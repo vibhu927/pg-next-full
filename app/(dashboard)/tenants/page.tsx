@@ -264,7 +264,7 @@ export default function TenantsPage() {
               <div className="ml-4">
                 <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400">Monthly Revenue</h2>
                 <p className="text-2xl font-semibold text-gray-900 dark:text-white">
-                  ${tenants.reduce((sum, t) => sum + (parseFloat(t.rentAmount) || 0), 0).toLocaleString()}
+                  ₹{tenants.reduce((sum, t) => sum + (parseFloat(t.rentAmount) || 0), 0).toLocaleString()}
                 </p>
               </div>
             </div>
@@ -404,7 +404,7 @@ export default function TenantsPage() {
                     </td>
                     <td className="whitespace-nowrap px-6 py-4">
                       <div className="text-sm font-medium text-gray-900 dark:text-white">
-                        ${tenant.rentAmount}
+                        ₹{tenant.rentAmount}
                         <span className="text-xs font-normal text-gray-500 dark:text-gray-400">/month</span>
                       </div>
                     </td>
@@ -593,7 +593,7 @@ export default function TenantsPage() {
                         .filter((room) => !formData.propertyId || room.propertyId === formData.propertyId)
                         .map((room) => (
                           <option key={room.id} value={room.id}>
-                            {room.roomNumber} - {room.type} (${room.price}/month)
+                            {room.roomNumber} - {room.type} (₹{room.price}/month)
                           </option>
                         ))}
                     </select>
@@ -747,7 +747,7 @@ export default function TenantsPage() {
                     .filter((room) => !formData.propertyId || room.propertyId === formData.propertyId)
                     .map((room) => (
                       <option key={room.id} value={room.id}>
-                        {room.roomNumber} - {room.type} (${room.price}/month)
+                        {room.roomNumber} - {room.type} (₹{room.price}/month)
                       </option>
                     ))}
                 </select>

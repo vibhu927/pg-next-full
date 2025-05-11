@@ -497,7 +497,7 @@ export default function RoomsPage() {
                   content: (
                     <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Price ($/month)</label>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Price (₹/month)</label>
                         <div className="relative mt-1">
                           <input
                             type="number"
@@ -675,7 +675,7 @@ export default function RoomsPage() {
                   content: (
                     <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Price ($/month)</label>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Price (₹/month)</label>
                         <div className="relative mt-1">
                           <input
                             type="number"

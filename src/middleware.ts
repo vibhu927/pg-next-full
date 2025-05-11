@@ -14,7 +14,9 @@ export async function middleware(request: NextRequest) {
                           path.startsWith("/properties") ||
                           path.startsWith("/rooms") ||
                           path.startsWith("/tenants") ||
-                          path.startsWith("/settings");
+                          path.startsWith("/payments") ||
+                          path.startsWith("/settings") ||
+                          path.startsWith("/faq");
 
   // Define auth routes
   const isAuthRoute = path === "/" || path === "/login" || path === "/register";
@@ -40,7 +42,9 @@ export const config = {
     "/properties/:path*",
     "/rooms/:path*",
     "/tenants/:path*",
+    "/payments/:path*",
     "/settings/:path*",
+    "/faq/:path*",
     "/login",
     "/register",
   ],
