@@ -221,37 +221,43 @@ export default function PaymentsPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Header */}
-      <div className="rounded-xl bg-white p-6 shadow-sm dark:bg-gray-800">
-        <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-              {isAdmin ? "Payment Management" : "Your Payments"}
-            </h1>
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-              {isAdmin
-                ? "Manage payments, approve or decline payment requests"
-                : "View your payment history and make new payments"}
-            </p>
+      <div className="flex items-center">
+        <h1 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+          {isAdmin ? "Payment Management" : "Your Payments"}
+        </h1>
+      </div>
+
+      <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white shadow-md transition-all hover:shadow-lg dark:border-gray-700 dark:bg-gray-800">
+        <div className="absolute top-0 h-1 w-full bg-gradient-to-r from-indigo-600 to-purple-600"></div>
+        <div className="p-6">
+          <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
+            <div>
+              <p className="text-lg font-medium text-gray-700 dark:text-gray-300">
+                {isAdmin
+                  ? "Manage payments, approve or decline payment requests"
+                  : "View your payment history and make new payments"}
+              </p>
+            </div>
+            {!isAdmin && (
+              <button
+                type="button"
+                className="inline-flex items-center rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 px-5 py-2.5 text-sm font-medium text-white shadow-md transition-all hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                onClick={() => {
+                  // For regular users, we already set the selectedTenant in useEffect
+                  if (selectedTenant) {
+                    setIsQrModalOpen(true);
+                  } else {
+                    toast.error("No tenant information found. Please contact support.");
+                  }
+                }}
+              >
+                <LucidePlus className="mr-2 h-4 w-4" />
+                Make Payment
+              </button>
+            )}
           </div>
-          {!isAdmin && (
-            <button
-              type="button"
-              className="inline-flex items-center rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-              onClick={() => {
-                // For regular users, we already set the selectedTenant in useEffect
-                if (selectedTenant) {
-                  setIsQrModalOpen(true);
-                } else {
-                  toast.error("No tenant information found. Please contact support.");
-                }
-              }}
-            >
-              <LucidePlus className="mr-2 h-4 w-4" />
-              Make Payment
-            </button>
-          )}
         </div>
       </div>
 
@@ -262,7 +268,7 @@ export default function PaymentsPage() {
         </div>
         <input
           type="text"
-          className="block w-full rounded-lg border border-gray-300 bg-white py-3 pl-12 pr-10 text-sm shadow-sm transition-colors focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400"
+          className="block w-full rounded-lg border border-gray-300 bg-white py-3 pl-12 pr-10 text-sm shadow-sm transition-colors focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400"
           placeholder="Search payments by tenant, room, property, amount, type, or status..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
@@ -287,14 +293,15 @@ export default function PaymentsPage() {
           </div>
         </div>
       ) : error ? (
-        <div className="rounded-xl border border-red-200 bg-red-50 p-6 text-center shadow-sm dark:border-red-900 dark:bg-red-900/20">
-          <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/30">
-            <LucideAlertCircle className="h-6 w-6 text-red-600 dark:text-red-400" />
+        <div className="relative overflow-hidden rounded-xl border border-red-200 bg-red-50 p-6 text-center shadow-md dark:border-red-900/50 dark:bg-red-900/20">
+          <div className="absolute top-0 h-1 w-full bg-gradient-to-r from-red-600 to-rose-600"></div>
+          <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-red-500/20 to-rose-500/20 text-red-600 dark:text-red-400">
+            <LucideAlertCircle className="h-6 w-6" />
           </div>
           <h3 className="mb-2 text-lg font-medium text-red-800 dark:text-red-300">{error}</h3>
           <p className="mb-4 text-sm text-red-700 dark:text-red-400">We couldn't load the payment data. Please try again.</p>
           <button
-            className="inline-flex items-center rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:bg-red-700 dark:hover:bg-red-600"
+            className="inline-flex items-center rounded-lg bg-gradient-to-r from-red-600 to-rose-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-all hover:from-red-700 hover:to-rose-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
             onClick={() => window.location.reload()}
           >
             <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -304,11 +311,12 @@ export default function PaymentsPage() {
           </button>
         </div>
       ) : (
-        <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
+        <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white shadow-md transition-all hover:shadow-lg dark:border-gray-700 dark:bg-gray-800">
+          <div className="absolute top-0 h-1 w-full bg-gradient-to-r from-indigo-600 to-purple-600"></div>
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
               <thead>
-                <tr className="bg-gray-50 dark:bg-gray-700">
+                <tr className="bg-gray-50 dark:bg-gray-700/50">
                   <th scope="col" className="px-6 py-4 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">
                     <div className="flex items-center">
                       <span>Tenant</span>
@@ -353,7 +361,7 @@ export default function PaymentsPage() {
                     >
                       <td className="whitespace-nowrap px-6 py-4">
                         <div className="flex items-center">
-                          <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400">
+                          <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500/20 to-purple-500/20 text-indigo-700 dark:text-indigo-400">
                             {payment.tenant?.name?.charAt(0).toUpperCase() || "?"}
                           </div>
                           <div className="ml-4">
@@ -370,7 +378,7 @@ export default function PaymentsPage() {
                         <div className="text-sm font-medium text-gray-900 dark:text-white">₹{payment.amount.toLocaleString()}</div>
                       </td>
                       <td className="whitespace-nowrap px-6 py-4">
-                        <div className="inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                        <div className="inline-flex rounded-full bg-gradient-to-r from-indigo-500/10 to-purple-500/10 px-2.5 py-1 text-xs font-medium text-indigo-800 dark:text-indigo-300">
                           {payment.paymentType.replace(/_/g, " ")}
                         </div>
                       </td>
@@ -380,7 +388,19 @@ export default function PaymentsPage() {
                         </div>
                       </td>
                       <td className="whitespace-nowrap px-6 py-4">
-                        <div className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium ${getStatusBadgeClass(payment.status)}`}>
+                        <div className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium
+                          ${payment.status === "PENDING"
+                            ? "bg-gradient-to-r from-yellow-500/10 to-amber-500/10 text-yellow-800 dark:text-yellow-300"
+                            : payment.status === "WAITING_APPROVAL"
+                            ? "bg-gradient-to-r from-blue-500/10 to-indigo-500/10 text-blue-800 dark:text-blue-300"
+                            : payment.status === "PAID"
+                            ? "bg-gradient-to-r from-green-500/10 to-emerald-500/10 text-green-800 dark:text-green-300"
+                            : payment.status === "FAILED"
+                            ? "bg-gradient-to-r from-red-500/10 to-rose-500/10 text-red-800 dark:text-red-300"
+                            : payment.status === "REFUNDED"
+                            ? "bg-gradient-to-r from-purple-500/10 to-pink-500/10 text-purple-800 dark:text-purple-300"
+                            : "bg-gradient-to-r from-gray-500/10 to-slate-500/10 text-gray-800 dark:text-gray-300"
+                          }`}>
                           {payment.status.replace(/_/g, " ")}
                         </div>
                       </td>
@@ -389,7 +409,7 @@ export default function PaymentsPage() {
                           {payment.status === "PENDING" && !isAdmin && (
                             <button
                               type="button"
-                              className="inline-flex items-center rounded-md bg-green-50 p-2 text-green-600 transition-colors hover:bg-green-100 dark:bg-green-900/20 dark:text-green-400 dark:hover:bg-green-900/30"
+                              className="inline-flex items-center rounded-full bg-gradient-to-br from-green-500/10 to-emerald-500/10 p-2 text-green-600 transition-colors hover:from-green-500/20 hover:to-emerald-500/20 dark:text-green-400"
                               onClick={() => handleMarkAsPaid(payment.id)}
                             >
                               <LucideCheck className="h-4 w-4" />
@@ -399,14 +419,14 @@ export default function PaymentsPage() {
                             <>
                               <button
                                 type="button"
-                                className="inline-flex items-center rounded-md bg-green-50 p-2 text-green-600 transition-colors hover:bg-green-100 dark:bg-green-900/20 dark:text-green-400 dark:hover:bg-green-900/30"
+                                className="inline-flex items-center rounded-full bg-gradient-to-br from-green-500/10 to-emerald-500/10 p-2 text-green-600 transition-colors hover:from-green-500/20 hover:to-emerald-500/20 dark:text-green-400"
                                 onClick={() => handleApprovePayment(payment.id)}
                               >
                                 <LucideCheck className="h-4 w-4" />
                               </button>
                               <button
                                 type="button"
-                                className="inline-flex items-center rounded-md bg-red-50 p-2 text-red-600 transition-colors hover:bg-red-100 dark:bg-red-900/20 dark:text-red-400 dark:hover:bg-red-900/30"
+                                className="inline-flex items-center rounded-full bg-gradient-to-br from-red-500/10 to-rose-500/10 p-2 text-red-600 transition-colors hover:from-red-500/20 hover:to-rose-500/20 dark:text-red-400"
                                 onClick={() => handleDeclinePayment(payment.id)}
                               >
                                 <LucideX className="h-4 w-4" />
@@ -421,11 +441,13 @@ export default function PaymentsPage() {
                   <tr>
                     <td colSpan={7} className="px-6 py-12 text-center">
                       <div className="flex flex-col items-center">
-                        <svg className="mb-4 h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-                        </svg>
-                        <h3 className="mb-1 text-lg font-medium text-gray-900 dark:text-white">No payments found</h3>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                        <div className="mb-4 inline-flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500/20 to-purple-500/20 text-indigo-600 dark:text-indigo-400">
+                          <svg className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                          </svg>
+                        </div>
+                        <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">No payments found</h3>
+                        <p className="mb-6 text-gray-500 dark:text-gray-400">
                           {searchQuery ? "Try adjusting your search criteria" : "No payment records available"}
                         </p>
                       </div>
@@ -441,9 +463,10 @@ export default function PaymentsPage() {
       {/* QR Code Modal */}
       {isQrModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-xl dark:bg-gray-800">
+          <div className="w-full max-w-md relative overflow-hidden rounded-xl border border-gray-200 bg-white p-6 shadow-xl transition-all dark:border-gray-700 dark:bg-gray-800">
+            <div className="absolute top-0 left-0 h-1 w-full bg-gradient-to-r from-indigo-600 to-purple-600"></div>
             <div className="mb-6 flex items-center justify-between">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Make Payment</h2>
+              <h2 className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Make Payment</h2>
               <button
                 type="button"
                 className="rounded-full p-2 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-200"
@@ -454,17 +477,19 @@ export default function PaymentsPage() {
             </div>
 
             <div className="flex flex-col items-center justify-center space-y-6">
-              <div className="bg-white p-4 rounded-lg">
+              <div className="bg-white p-5 rounded-lg border border-gray-100 shadow-sm">
                 {selectedTenant ? (
                   <>
                     <div className="mb-4 text-center">
-                      <p className="text-sm font-medium text-gray-700">Amount: <span className="font-bold">₹{selectedTenant.rentAmount}</span></p>
+                      <p className="text-sm font-medium text-gray-700">Amount: <span className="font-bold text-indigo-600 dark:text-indigo-400">₹{selectedTenant.rentAmount}</span></p>
                       <p className="text-xs text-gray-500">Tenant: {selectedTenant.name}</p>
                     </div>
-                    <QRCode
-                      value={`upi://pay?pa=example@upi&pn=PG%20Management&am=${selectedTenant.rentAmount || ''}&cu=INR&tn=Rent%20Payment`}
-                      size={200}
-                    />
+                    <div className="p-2 bg-white rounded-lg">
+                      <QRCode
+                        value={`upi://pay?pa=example@upi&pn=PG%20Management&am=${selectedTenant.rentAmount || ''}&cu=INR&tn=Rent%20Payment`}
+                        size={200}
+                      />
+                    </div>
                   </>
                 ) : (
                   <div className="h-48 w-48 flex items-center justify-center">
@@ -476,12 +501,15 @@ export default function PaymentsPage() {
                 Scan this QR code to make your payment using any UPI app.
               </p>
               <div className="w-full space-y-4">
-                <div className="rounded-md bg-yellow-50 p-4 dark:bg-yellow-900/20">
+                <div className="relative overflow-hidden rounded-lg border border-yellow-200 bg-yellow-50 p-4 shadow-sm dark:border-yellow-900/50 dark:bg-yellow-900/20">
+                  <div className="absolute top-0 h-1 w-full bg-gradient-to-r from-yellow-500 to-amber-500"></div>
                   <div className="flex">
                     <div className="flex-shrink-0">
-                      <svg className="h-5 w-5 text-yellow-400 dark:text-yellow-300" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                      </svg>
+                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-yellow-500/20 to-amber-500/20 text-yellow-600 dark:text-yellow-400">
+                        <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                        </svg>
+                      </div>
                     </div>
                     <div className="ml-3">
                       <h3 className="text-sm font-medium text-yellow-800 dark:text-yellow-300">Important</h3>
@@ -493,13 +521,13 @@ export default function PaymentsPage() {
                 </div>
                 <button
                   type="button"
-                  className="w-full rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 px-5 py-2.5 text-center text-sm font-medium text-white shadow-md transition-all hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
                   onClick={handleCreatePayment}
                   disabled={isCreatingPayment}
                 >
                   {isCreatingPayment ? (
                     <>
-                      <svg className="mr-2 -ml-1 h-4 w-4 animate-spin text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <svg className="mr-2 h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                       </svg>
@@ -511,7 +539,7 @@ export default function PaymentsPage() {
                 </button>
                 <button
                   type="button"
-                  className="w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+                  className="w-full rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
                   onClick={() => setIsQrModalOpen(false)}
                 >
                   Cancel

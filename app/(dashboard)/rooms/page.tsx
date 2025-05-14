@@ -168,85 +168,93 @@ export default function RoomsPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Header with Stats */}
-      <div className="rounded-xl bg-white p-6 shadow-sm dark:bg-gray-800">
-        <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Room Management</h1>
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-              Manage your rooms, view their details, and track availability
-            </p>
-          </div>
-          <button
-            type="button"
-            className="inline-flex items-center rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-            onClick={() => setIsAddModalOpen(true)}
-          >
-            <LucidePlus className="mr-2 h-4 w-4" />
-            Add New Room
-          </button>
-        </div>
+      <div className="flex items-center">
+        <h1 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+          Room Management
+        </h1>
+      </div>
 
-        <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-            <div className="flex items-center">
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-indigo-100 text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-400">
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                </svg>
-              </div>
-              <div className="ml-4">
-                <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400">Total Rooms</h2>
-                <p className="text-2xl font-semibold text-gray-900 dark:text-white">{rooms.length}</p>
+      <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white shadow-md transition-all hover:shadow-lg dark:border-gray-700 dark:bg-gray-800">
+        <div className="absolute top-0 h-1 w-full bg-gradient-to-r from-indigo-600 to-purple-600"></div>
+        <div className="p-6">
+          <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
+            <div>
+              <p className="text-lg font-medium text-gray-700 dark:text-gray-300">
+                Manage your rooms, view their details, and track availability
+              </p>
+            </div>
+            <button
+              type="button"
+              className="inline-flex items-center rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 px-5 py-2.5 text-sm font-medium text-white shadow-md transition-all hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              onClick={() => setIsAddModalOpen(true)}
+            >
+              <LucidePlus className="mr-2 h-4 w-4" />
+              Add New Room
+            </button>
+          </div>
+
+          <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition-all hover:shadow-md dark:border-gray-700 dark:bg-gray-800">
+              <div className="flex items-center">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500/20 to-purple-500/20 text-indigo-600 dark:text-indigo-400">
+                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  </svg>
+                </div>
+                <div className="ml-4">
+                  <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400">Total Rooms</h2>
+                  <p className="text-2xl font-semibold text-gray-900 dark:text-white">{rooms.length}</p>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-            <div className="flex items-center">
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400">
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <div className="ml-4">
-                <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400">Available Rooms</h2>
-                <p className="text-2xl font-semibold text-gray-900 dark:text-white">
-                  {rooms.filter(r => r.isAvailable).length}
-                </p>
+            <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition-all hover:shadow-md dark:border-gray-700 dark:bg-gray-800">
+              <div className="flex items-center">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-green-500/20 to-emerald-500/20 text-green-600 dark:text-green-400">
+                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div className="ml-4">
+                  <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400">Available Rooms</h2>
+                  <p className="text-2xl font-semibold text-gray-900 dark:text-white">
+                    {rooms.filter(r => r.isAvailable).length}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-            <div className="flex items-center">
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                </svg>
-              </div>
-              <div className="ml-4">
-                <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400">Properties</h2>
-                <p className="text-2xl font-semibold text-gray-900 dark:text-white">
-                  {new Set(rooms.map(r => r.propertyId)).size}
-                </p>
+            <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition-all hover:shadow-md dark:border-gray-700 dark:bg-gray-800">
+              <div className="flex items-center">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-blue-500/20 to-indigo-500/20 text-blue-600 dark:text-blue-400">
+                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                  </svg>
+                </div>
+                <div className="ml-4">
+                  <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400">Properties</h2>
+                  <p className="text-2xl font-semibold text-gray-900 dark:text-white">
+                    {new Set(rooms.map(r => r.propertyId)).size}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-            <div className="flex items-center">
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-purple-100 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400">
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <div className="ml-4">
-                <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400">Avg. Price</h2>
-                <p className="text-2xl font-semibold text-gray-900 dark:text-white">
-                  ${rooms.length > 0 ? Math.round(rooms.reduce((sum, r) => sum + (parseFloat(r.price) || 0), 0) / rooms.length) : 0}
-                </p>
+            <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition-all hover:shadow-md dark:border-gray-700 dark:bg-gray-800">
+              <div className="flex items-center">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-purple-500/20 to-pink-500/20 text-purple-600 dark:text-purple-400">
+                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div className="ml-4">
+                  <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400">Avg. Price</h2>
+                  <p className="text-2xl font-semibold text-gray-900 dark:text-white">
+                    ₹{rooms.length > 0 ? Math.round(rooms.reduce((sum, r) => sum + (parseFloat(r.price) || 0), 0) / rooms.length) : 0}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -260,7 +268,7 @@ export default function RoomsPage() {
         </div>
         <input
           type="text"
-          className="block w-full rounded-lg border border-gray-300 bg-white py-3 pl-12 pr-10 text-sm shadow-sm transition-colors focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400"
+          className="block w-full rounded-lg border border-gray-300 bg-white py-3 pl-12 pr-10 text-sm shadow-sm transition-colors focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400"
           placeholder="Search rooms by number, floor, type, or property..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
@@ -278,56 +286,69 @@ export default function RoomsPage() {
 
       {/* Rooms Table */}
       {isLoading ? (
-        <div className="flex h-40 items-center justify-center">
-          <div className="h-8 w-8 animate-spin rounded-full border-b-2 border-t-2 border-indigo-600"></div>
-          <span className="ml-2 text-gray-700 dark:text-gray-300">Loading rooms...</span>
+        <div className="flex h-60 items-center justify-center">
+          <div className="flex flex-col items-center">
+            <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-t-2 border-indigo-600"></div>
+            <span className="mt-4 text-sm font-medium text-gray-700 dark:text-gray-300">Loading rooms...</span>
+          </div>
         </div>
       ) : error ? (
-        <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-center dark:border-red-900 dark:bg-red-900/20">
-          <p className="text-red-700 dark:text-red-400">{error}</p>
+        <div className="relative overflow-hidden rounded-xl border border-red-200 bg-red-50 p-6 text-center shadow-md dark:border-red-900/50 dark:bg-red-900/20">
+          <div className="absolute top-0 h-1 w-full bg-gradient-to-r from-red-600 to-rose-600"></div>
+          <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-red-500/20 to-rose-500/20 text-red-600 dark:text-red-400">
+            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3 className="mb-2 text-lg font-medium text-red-800 dark:text-red-300">{error}</h3>
+          <p className="mb-4 text-sm text-red-700 dark:text-red-400">We couldn't load the room data. Please try again.</p>
           <button
-            className="mt-2 text-sm font-medium text-red-700 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300"
+            className="inline-flex items-center rounded-lg bg-gradient-to-r from-red-600 to-rose-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-all hover:from-red-700 hover:to-rose-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
             onClick={() => window.location.reload()}
           >
+            <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
             Try again
           </button>
         </div>
       ) : (
-        <div className="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700">
+        <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white shadow-md transition-all hover:shadow-lg dark:border-gray-700 dark:bg-gray-800">
+          <div className="absolute top-0 h-1 w-full bg-gradient-to-r from-indigo-600 to-purple-600"></div>
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-              <thead className="bg-gray-50 dark:bg-gray-800">
+              <thead className="bg-gray-50 dark:bg-gray-700/50">
                 <tr>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                <th scope="col" className="px-6 py-4 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">
                   Room Number
                 </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                <th scope="col" className="px-6 py-4 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">
                   Floor
                 </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                <th scope="col" className="px-6 py-4 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">
                   Type
                 </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                <th scope="col" className="px-6 py-4 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">
                   Capacity
                 </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                <th scope="col" className="px-6 py-4 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">
                   Price
                 </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                <th scope="col" className="px-6 py-4 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">
                   Status
                 </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                <th scope="col" className="px-6 py-4 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">
                   Property
                 </th>
-                <th scope="col" className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                <th scope="col" className="px-6 py-4 text-right text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900">
+            <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-800">
               {filteredRooms.length > 0 ? (
                 filteredRooms.map((room) => (
-                  <tr key={room.id}>
+                  <tr key={room.id} className="transition-colors hover:bg-gray-50 dark:hover:bg-gray-700/40">
                     <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">
                       {room.roomNumber}
                     </td>
@@ -335,20 +356,22 @@ export default function RoomsPage() {
                       {room.floor}
                     </td>
                     <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
-                      {room.type}
+                      <span className="inline-flex rounded-full bg-gradient-to-r from-indigo-500/10 to-purple-500/10 px-2.5 py-1 text-xs font-medium text-indigo-800 dark:text-indigo-300">
+                        {room.type}
+                      </span>
                     </td>
                     <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
                       {room.capacity}
                     </td>
                     <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
-                      ${room.price}/month
+                      ₹{room.price}/month
                     </td>
                     <td className="whitespace-nowrap px-6 py-4 text-sm">
                       <span
-                        className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
+                        className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${
                           room.isAvailable
-                            ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400"
-                            : "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400"
+                            ? "bg-gradient-to-r from-green-500/10 to-emerald-500/10 text-green-800 dark:text-green-400"
+                            : "bg-gradient-to-r from-red-500/10 to-rose-500/10 text-red-800 dark:text-red-400"
                         }`}
                       >
                         {room.isAvailable ? "Available" : "Occupied"}
@@ -358,27 +381,49 @@ export default function RoomsPage() {
                       {room.property?.name || "Unknown"}
                     </td>
                     <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
-                      <button
-                        type="button"
-                        className="mr-2 text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300"
-                        onClick={() => openEditModal(room)}
-                      >
-                        <LucideEdit className="h-4 w-4" />
-                      </button>
-                      <button
-                        type="button"
-                        className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300"
-                        onClick={() => openDeleteModal(room)}
-                      >
-                        <LucideTrash className="h-4 w-4" />
-                      </button>
+                      <div className="flex justify-end space-x-2">
+                        <button
+                          type="button"
+                          className="inline-flex items-center rounded-full bg-gradient-to-br from-indigo-500/10 to-purple-500/10 p-2 text-indigo-600 transition-colors hover:from-indigo-500/20 hover:to-purple-500/20 dark:text-indigo-400"
+                          onClick={() => openEditModal(room)}
+                        >
+                          <LucideEdit className="h-4 w-4" />
+                        </button>
+                        <button
+                          type="button"
+                          className="inline-flex items-center rounded-full bg-gradient-to-br from-red-500/10 to-rose-500/10 p-2 text-red-600 transition-colors hover:from-red-500/20 hover:to-rose-500/20 dark:text-red-400"
+                          onClick={() => openDeleteModal(room)}
+                        >
+                          <LucideTrash className="h-4 w-4" />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan={8} className="px-6 py-4 text-center text-sm text-gray-500 dark:text-gray-400">
-                    No rooms found
+                  <td colSpan={8} className="px-6 py-12 text-center">
+                    <div className="flex flex-col items-center">
+                      <div className="mb-4 inline-flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500/20 to-purple-500/20 text-indigo-600 dark:text-indigo-400">
+                        <svg className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
+                      </div>
+                      <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">No rooms found</h3>
+                      <p className="mb-6 text-gray-500 dark:text-gray-400">
+                        {searchQuery ? "Try adjusting your search criteria" : "Add your first room to get started"}
+                      </p>
+                      {!searchQuery && (
+                        <button
+                          type="button"
+                          className="inline-flex items-center rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 px-5 py-2.5 text-sm font-medium text-white shadow-md transition-all hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                          onClick={() => setIsAddModalOpen(true)}
+                        >
+                          <LucidePlus className="mr-2 h-4 w-4" />
+                          Add Room
+                        </button>
+                      )}
+                    </div>
                   </td>
                 </tr>
               )}

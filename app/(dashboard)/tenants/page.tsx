@@ -187,85 +187,93 @@ export default function TenantsPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Header with Stats */}
-      <div className="rounded-xl bg-white p-6 shadow-sm dark:bg-gray-800">
-        <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Tenant Management</h1>
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-              Manage your tenants, view their details, and track their lease information
-            </p>
-          </div>
-          <button
-            type="button"
-            className="inline-flex items-center rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-            onClick={() => setIsAddModalOpen(true)}
-          >
-            <LucidePlus className="mr-2 h-4 w-4" />
-            Add New Tenant
-          </button>
-        </div>
+      <div className="flex items-center">
+        <h1 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+          Tenant Management
+        </h1>
+      </div>
 
-        <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-            <div className="flex items-center">
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-indigo-100 text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-400">
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-              </div>
-              <div className="ml-4">
-                <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400">Total Tenants</h2>
-                <p className="text-2xl font-semibold text-gray-900 dark:text-white">{tenants.length}</p>
+      <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white shadow-md transition-all hover:shadow-lg dark:border-gray-700 dark:bg-gray-800">
+        <div className="absolute top-0 h-1 w-full bg-gradient-to-r from-indigo-600 to-purple-600"></div>
+        <div className="p-6">
+          <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
+            <div>
+              <p className="text-lg font-medium text-gray-700 dark:text-gray-300">
+                Manage your tenants, view their details, and track their lease information
+              </p>
+            </div>
+            <button
+              type="button"
+              className="inline-flex items-center rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 px-5 py-2.5 text-sm font-medium text-white shadow-md transition-all hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              onClick={() => setIsAddModalOpen(true)}
+            >
+              <LucidePlus className="mr-2 h-4 w-4" />
+              Add New Tenant
+            </button>
+          </div>
+
+          <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition-all hover:shadow-md dark:border-gray-700 dark:bg-gray-800">
+              <div className="flex items-center">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500/20 to-purple-500/20 text-indigo-600 dark:text-indigo-400">
+                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>
+                </div>
+                <div className="ml-4">
+                  <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400">Total Tenants</h2>
+                  <p className="text-2xl font-semibold text-gray-900 dark:text-white">{tenants.length}</p>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-            <div className="flex items-center">
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400">
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-              </div>
-              <div className="ml-4">
-                <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400">Active Leases</h2>
-                <p className="text-2xl font-semibold text-gray-900 dark:text-white">
-                  {tenants.filter(t => new Date(t.leaseEnd) > new Date()).length}
-                </p>
+            <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition-all hover:shadow-md dark:border-gray-700 dark:bg-gray-800">
+              <div className="flex items-center">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-green-500/20 to-emerald-500/20 text-green-600 dark:text-green-400">
+                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <div className="ml-4">
+                  <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400">Active Leases</h2>
+                  <p className="text-2xl font-semibold text-gray-900 dark:text-white">
+                    {tenants.filter(t => new Date(t.leaseEnd) > new Date()).length}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-            <div className="flex items-center">
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                </svg>
-              </div>
-              <div className="ml-4">
-                <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400">Properties</h2>
-                <p className="text-2xl font-semibold text-gray-900 dark:text-white">
-                  {new Set(tenants.map(t => t.room?.property?.name).filter(Boolean)).size}
-                </p>
+            <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition-all hover:shadow-md dark:border-gray-700 dark:bg-gray-800">
+              <div className="flex items-center">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-blue-500/20 to-indigo-500/20 text-blue-600 dark:text-blue-400">
+                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                  </svg>
+                </div>
+                <div className="ml-4">
+                  <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400">Properties</h2>
+                  <p className="text-2xl font-semibold text-gray-900 dark:text-white">
+                    {new Set(tenants.map(t => t.room?.property?.name).filter(Boolean)).size}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-            <div className="flex items-center">
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-purple-100 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400">
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <div className="ml-4">
-                <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400">Monthly Revenue</h2>
-                <p className="text-2xl font-semibold text-gray-900 dark:text-white">
-                  ₹{tenants.reduce((sum, t) => sum + (parseFloat(t.rentAmount) || 0), 0).toLocaleString()}
-                </p>
+            <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition-all hover:shadow-md dark:border-gray-700 dark:bg-gray-800">
+              <div className="flex items-center">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-purple-500/20 to-pink-500/20 text-purple-600 dark:text-purple-400">
+                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div className="ml-4">
+                  <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400">Monthly Revenue</h2>
+                  <p className="text-2xl font-semibold text-gray-900 dark:text-white">
+                    ₹{tenants.reduce((sum, t) => sum + (parseFloat(t.rentAmount) || 0), 0).toLocaleString()}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -279,7 +287,7 @@ export default function TenantsPage() {
         </div>
         <input
           type="text"
-          className="block w-full rounded-lg border border-gray-300 bg-white py-3 pl-12 pr-10 text-sm shadow-sm transition-colors focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400"
+          className="block w-full rounded-lg border border-gray-300 bg-white py-3 pl-12 pr-10 text-sm shadow-sm transition-colors focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400"
           placeholder="Search tenants by name, email, phone, room, or property..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
@@ -304,16 +312,17 @@ export default function TenantsPage() {
           </div>
         </div>
       ) : error ? (
-        <div className="rounded-xl border border-red-200 bg-red-50 p-6 text-center shadow-sm dark:border-red-900 dark:bg-red-900/20">
-          <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/30">
-            <svg className="h-6 w-6 text-red-600 dark:text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div className="relative overflow-hidden rounded-xl border border-red-200 bg-red-50 p-6 text-center shadow-md dark:border-red-900/50 dark:bg-red-900/20">
+          <div className="absolute top-0 h-1 w-full bg-gradient-to-r from-red-600 to-rose-600"></div>
+          <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-red-500/20 to-rose-500/20 text-red-600 dark:text-red-400">
+            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
           <h3 className="mb-2 text-lg font-medium text-red-800 dark:text-red-300">{error}</h3>
           <p className="mb-4 text-sm text-red-700 dark:text-red-400">We couldn't load the tenant data. Please try again.</p>
           <button
-            className="inline-flex items-center rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:bg-red-700 dark:hover:bg-red-600"
+            className="inline-flex items-center rounded-lg bg-gradient-to-r from-red-600 to-rose-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-all hover:from-red-700 hover:to-rose-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
             onClick={() => window.location.reload()}
           >
             <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -323,11 +332,12 @@ export default function TenantsPage() {
           </button>
         </div>
       ) : (
-        <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
+        <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white shadow-md transition-all hover:shadow-lg dark:border-gray-700 dark:bg-gray-800">
+          <div className="absolute top-0 h-1 w-full bg-gradient-to-r from-indigo-600 to-purple-600"></div>
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
               <thead>
-                <tr className="bg-gray-50 dark:bg-gray-700">
+                <tr className="bg-gray-50 dark:bg-gray-700/50">
                 <th scope="col" className="px-6 py-4 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">
                   <div className="flex items-center">
                     <span>Name</span>
@@ -372,7 +382,7 @@ export default function TenantsPage() {
                   >
                     <td className="whitespace-nowrap px-6 py-4">
                       <div className="flex items-center">
-                        <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400">
+                        <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500/20 to-purple-500/20 text-indigo-700 dark:text-indigo-400">
                           {tenant.name.charAt(0).toUpperCase()}
                         </div>
                         <div className="ml-4">
@@ -385,7 +395,7 @@ export default function TenantsPage() {
                       <div className="text-sm text-gray-500 dark:text-gray-400">{tenant.phone}</div>
                     </td>
                     <td className="whitespace-nowrap px-6 py-4">
-                      <div className="inline-flex rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900/30 dark:text-blue-300">
+                      <div className="inline-flex rounded-full bg-gradient-to-r from-blue-500/10 to-indigo-500/10 px-2.5 py-1 text-xs font-medium text-blue-800 dark:text-blue-300">
                         {tenant.room?.roomNumber || "N/A"}
                       </div>
                     </td>
@@ -412,14 +422,14 @@ export default function TenantsPage() {
                       <div className="flex justify-end space-x-2">
                         <button
                           type="button"
-                          className="inline-flex items-center rounded-md bg-indigo-50 p-2 text-indigo-600 transition-colors hover:bg-indigo-100 dark:bg-indigo-900/20 dark:text-indigo-400 dark:hover:bg-indigo-900/30"
+                          className="inline-flex items-center rounded-full bg-gradient-to-br from-indigo-500/10 to-purple-500/10 p-2 text-indigo-600 transition-colors hover:from-indigo-500/20 hover:to-purple-500/20 dark:text-indigo-400"
                           onClick={() => openEditModal(tenant)}
                         >
                           <LucideEdit className="h-4 w-4" />
                         </button>
                         <button
                           type="button"
-                          className="inline-flex items-center rounded-md bg-red-50 p-2 text-red-600 transition-colors hover:bg-red-100 dark:bg-red-900/20 dark:text-red-400 dark:hover:bg-red-900/30"
+                          className="inline-flex items-center rounded-full bg-gradient-to-br from-red-500/10 to-rose-500/10 p-2 text-red-600 transition-colors hover:from-red-500/20 hover:to-rose-500/20 dark:text-red-400"
                           onClick={() => openDeleteModal(tenant)}
                         >
                           <LucideTrash className="h-4 w-4" />
@@ -432,17 +442,19 @@ export default function TenantsPage() {
                 <tr>
                   <td colSpan={7} className="px-6 py-12 text-center">
                     <div className="flex flex-col items-center">
-                      <svg className="mb-4 h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-                      </svg>
-                      <h3 className="mb-1 text-lg font-medium text-gray-900 dark:text-white">No tenants found</h3>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                      <div className="mb-4 inline-flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500/20 to-purple-500/20 text-indigo-600 dark:text-indigo-400">
+                        <svg className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                        </svg>
+                      </div>
+                      <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">No tenants found</h3>
+                      <p className="mb-6 text-gray-500 dark:text-gray-400">
                         {searchQuery ? "Try adjusting your search criteria" : "Add your first tenant to get started"}
                       </p>
                       {!searchQuery && (
                         <button
                           type="button"
-                          className="mt-4 inline-flex items-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700"
+                          className="inline-flex items-center rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 px-5 py-2.5 text-sm font-medium text-white shadow-md transition-all hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                           onClick={() => setIsAddModalOpen(true)}
                         >
                           <LucidePlus className="mr-2 h-4 w-4" />

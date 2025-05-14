@@ -308,10 +308,12 @@ export default function DashboardPage() {
   }, []);
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-        {isAdmin ? "Admin Dashboard" : "Your Dashboard"}
-      </h1>
+    <div className="space-y-8">
+      <div className="flex items-center">
+        <h1 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+          {isAdmin ? "Admin Dashboard" : "Your Dashboard"}
+        </h1>
+      </div>
 
       {/* Loading Indicator */}
       {isLoading && (
@@ -325,7 +327,7 @@ export default function DashboardPage() {
 
       {/* Error Display - only show a small warning instead of a full error */}
       {error && !isLoading && (
-        <div className="mb-4 rounded-md bg-yellow-50 p-3 dark:bg-yellow-900/20">
+        <div className="mb-4 rounded-xl bg-yellow-50 p-4 shadow-sm dark:bg-yellow-900/20">
           <div className="flex">
             <div className="flex-shrink-0">
               <svg className="h-5 w-5 text-yellow-400 dark:text-yellow-300" viewBox="0 0 20 20" fill="currentColor">
@@ -341,7 +343,7 @@ export default function DashboardPage() {
                 <button
                   type="button"
                   onClick={() => window.location.reload()}
-                  className="rounded-md bg-yellow-50 px-2 py-1.5 text-sm font-medium text-yellow-800 hover:bg-yellow-100 focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:ring-offset-2 dark:bg-yellow-900/30 dark:text-yellow-300 dark:hover:bg-yellow-900/40"
+                  className="rounded-md bg-gradient-to-r from-yellow-400 to-orange-400 px-3 py-1.5 text-sm font-medium text-white shadow-sm hover:from-yellow-500 hover:to-orange-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2"
                 >
                   Refresh
                 </button>
@@ -354,80 +356,101 @@ export default function DashboardPage() {
       {/* Summary Cards */}
       {isAdmin ? (
         // Admin Summary Cards
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="rounded-lg bg-white p-6 shadow dark:bg-gray-800">
-            <div className="text-sm font-medium text-gray-500 dark:text-gray-400">Total Properties</div>
-            <div className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
-              {isLoading ? "..." : properties.length}
-            </div>
-            <div className="mt-2 text-sm text-green-600 dark:text-green-400">
-              {properties.length > 0 ? "Active properties" : "No properties yet"}
-            </div>
-          </div>
-
-          <div className="rounded-lg bg-white p-6 shadow dark:bg-gray-800">
-            <div className="text-sm font-medium text-gray-500 dark:text-gray-400">Total Rooms</div>
-            <div className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
-              {isLoading ? "..." : rooms.length}
-            </div>
-            <div className="mt-2 text-sm text-green-600 dark:text-green-400">
-              {rooms.filter(room => room.isAvailable).length} available
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white shadow-md transition-all hover:shadow-lg dark:border-gray-700 dark:bg-gray-800">
+            <div className="absolute top-0 h-1 w-full bg-gradient-to-r from-indigo-600 to-purple-600"></div>
+            <div className="p-6">
+              <div className="text-sm font-medium text-gray-500 dark:text-gray-400">Total Properties</div>
+              <div className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
+                {isLoading ? "..." : properties.length}
+              </div>
+              <div className="mt-2 text-sm text-green-600 dark:text-green-400">
+                {properties.length > 0 ? "Active properties" : "No properties yet"}
+              </div>
             </div>
           </div>
 
-          <div className="rounded-lg bg-white p-6 shadow dark:bg-gray-800">
-            <div className="text-sm font-medium text-gray-500 dark:text-gray-400">Total Tenants</div>
-            <div className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
-              {isLoading ? "..." : tenants.length}
-            </div>
-            <div className="mt-2 text-sm text-green-600 dark:text-green-400">
-              {tenants.length > 0 ? "Active tenants" : "No tenants yet"}
+          <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white shadow-md transition-all hover:shadow-lg dark:border-gray-700 dark:bg-gray-800">
+            <div className="absolute top-0 h-1 w-full bg-gradient-to-r from-indigo-600 to-purple-600"></div>
+            <div className="p-6">
+              <div className="text-sm font-medium text-gray-500 dark:text-gray-400">Total Rooms</div>
+              <div className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
+                {isLoading ? "..." : rooms.length}
+              </div>
+              <div className="mt-2 text-sm text-green-600 dark:text-green-400">
+                {rooms.filter(room => room.isAvailable).length} available
+              </div>
             </div>
           </div>
 
-          <div className="rounded-lg bg-white p-6 shadow dark:bg-gray-800">
-            <div className="text-sm font-medium text-gray-500 dark:text-gray-400">Occupancy Rate</div>
-            <div className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
-              {isLoading ? "..." : rooms.length > 0
-                ? `${Math.round((rooms.length - rooms.filter(room => room.isAvailable).length) / rooms.length * 100)}%`
-                : "0%"
-              }
+          <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white shadow-md transition-all hover:shadow-lg dark:border-gray-700 dark:bg-gray-800">
+            <div className="absolute top-0 h-1 w-full bg-gradient-to-r from-indigo-600 to-purple-600"></div>
+            <div className="p-6">
+              <div className="text-sm font-medium text-gray-500 dark:text-gray-400">Total Tenants</div>
+              <div className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
+                {isLoading ? "..." : tenants.length}
+              </div>
+              <div className="mt-2 text-sm text-green-600 dark:text-green-400">
+                {tenants.length > 0 ? "Active tenants" : "No tenants yet"}
+              </div>
             </div>
-            <div className="mt-2 text-sm text-green-600 dark:text-green-400">
-              {rooms.length - rooms.filter(room => room.isAvailable).length} occupied rooms
+          </div>
+
+          <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white shadow-md transition-all hover:shadow-lg dark:border-gray-700 dark:bg-gray-800">
+            <div className="absolute top-0 h-1 w-full bg-gradient-to-r from-indigo-600 to-purple-600"></div>
+            <div className="p-6">
+              <div className="text-sm font-medium text-gray-500 dark:text-gray-400">Occupancy Rate</div>
+              <div className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
+                {isLoading ? "..." : rooms.length > 0
+                  ? `${Math.round((rooms.length - rooms.filter(room => room.isAvailable).length) / rooms.length * 100)}%`
+                  : "0%"
+                }
+              </div>
+              <div className="mt-2 text-sm text-green-600 dark:text-green-400">
+                {rooms.length - rooms.filter(room => room.isAvailable).length} occupied rooms
+              </div>
             </div>
           </div>
         </div>
       ) : (
         // User Summary Cards
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          <div className="rounded-lg bg-white p-6 shadow dark:bg-gray-800">
-            <div className="text-sm font-medium text-gray-500 dark:text-gray-400">Your Room</div>
-            <div className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
-              {isLoading ? "..." : userRoom ? `${userRoom.roomNumber}` : "None"}
-            </div>
-            <div className="mt-2 text-sm text-green-600 dark:text-green-400">
-              {userRoom ? `${userRoom.type} Room` : "No room assigned"}
-            </div>
-          </div>
-
-          <div className="rounded-lg bg-white p-6 shadow dark:bg-gray-800">
-            <div className="text-sm font-medium text-gray-500 dark:text-gray-400">Monthly Rent</div>
-            <div className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
-              {isLoading ? "..." : userTenant ? `₹${userTenant.rentAmount}` : "₹0"}
-            </div>
-            <div className="mt-2 text-sm text-green-600 dark:text-green-400">
-              Due on the 1st of each month
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white shadow-md transition-all hover:shadow-lg dark:border-gray-700 dark:bg-gray-800">
+            <div className="absolute top-0 h-1 w-full bg-gradient-to-r from-indigo-600 to-purple-600"></div>
+            <div className="p-6">
+              <div className="text-sm font-medium text-gray-500 dark:text-gray-400">Your Room</div>
+              <div className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
+                {isLoading ? "..." : userRoom ? `${userRoom.roomNumber}` : "None"}
+              </div>
+              <div className="mt-2 text-sm text-green-600 dark:text-green-400">
+                {userRoom ? `${userRoom.type} Room` : "No room assigned"}
+              </div>
             </div>
           </div>
 
-          <div className="rounded-lg bg-white p-6 shadow dark:bg-gray-800">
-            <div className="text-sm font-medium text-gray-500 dark:text-gray-400">Property</div>
-            <div className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
-              {isLoading ? "..." : userProperty ? userProperty.name : "None"}
+          <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white shadow-md transition-all hover:shadow-lg dark:border-gray-700 dark:bg-gray-800">
+            <div className="absolute top-0 h-1 w-full bg-gradient-to-r from-indigo-600 to-purple-600"></div>
+            <div className="p-6">
+              <div className="text-sm font-medium text-gray-500 dark:text-gray-400">Monthly Rent</div>
+              <div className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
+                {isLoading ? "..." : userTenant ? `₹${userTenant.rentAmount}` : "₹0"}
+              </div>
+              <div className="mt-2 text-sm text-green-600 dark:text-green-400">
+                Due on the 1st of each month
+              </div>
             </div>
-            <div className="mt-2 text-sm text-green-600 dark:text-green-400">
-              {userProperty ? `${userProperty.address}, ${userProperty.city}` : "No property assigned"}
+          </div>
+
+          <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white shadow-md transition-all hover:shadow-lg dark:border-gray-700 dark:bg-gray-800">
+            <div className="absolute top-0 h-1 w-full bg-gradient-to-r from-indigo-600 to-purple-600"></div>
+            <div className="p-6">
+              <div className="text-sm font-medium text-gray-500 dark:text-gray-400">Property</div>
+              <div className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
+                {isLoading ? "..." : userProperty ? userProperty.name : "None"}
+              </div>
+              <div className="mt-2 text-sm text-green-600 dark:text-green-400">
+                {userProperty ? `${userProperty.address}, ${userProperty.city}` : "No property assigned"}
+              </div>
             </div>
           </div>
         </div>
@@ -440,227 +463,244 @@ export default function DashboardPage() {
             // Admin Charts
             <>
               {/* Occupancy Chart */}
-              <div className="rounded-lg bg-white p-6 shadow dark:bg-gray-800">
-                <h2 className="mb-4 text-lg font-medium text-gray-900 dark:text-white">Occupancy Rate</h2>
-                <div className="h-80">
-                  {isLoading ? (
-                    <div className="flex h-full items-center justify-center">
-                      <p className="text-gray-500 dark:text-gray-400">Loading data...</p>
-                    </div>
-                  ) : (
-                    <ResponsiveContainer width="100%" height="100%">
-                      <BarChart
-                        data={occupancyData}
-                        margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-                      >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
-                        <YAxis domain={[0, 100]} />
-                        <Tooltip formatter={(value) => [`${value}%`, 'Occupancy']} />
-                        <Legend />
-                        <Bar dataKey="occupancy" name="Occupancy (%)" fill="#4f46e5" />
-                      </BarChart>
-                    </ResponsiveContainer>
-                  )}
+              <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white shadow-md transition-all hover:shadow-lg dark:border-gray-700 dark:bg-gray-800">
+                <div className="absolute top-0 h-1 w-full bg-gradient-to-r from-indigo-600 to-purple-600"></div>
+                <div className="p-6">
+                  <h2 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Occupancy Rate</h2>
+                  <div className="h-80">
+                    {isLoading ? (
+                      <div className="flex h-full items-center justify-center">
+                        <p className="text-gray-500 dark:text-gray-400">Loading data...</p>
+                      </div>
+                    ) : (
+                      <ResponsiveContainer width="100%" height="100%">
+                        <BarChart
+                          data={occupancyData}
+                          margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                        >
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis dataKey="name" />
+                          <YAxis domain={[0, 100]} />
+                          <Tooltip formatter={(value) => [`${value}%`, 'Occupancy']} />
+                          <Legend />
+                          <Bar dataKey="occupancy" name="Occupancy (%)" fill="#6366f1" />
+                        </BarChart>
+                      </ResponsiveContainer>
+                    )}
+                  </div>
                 </div>
               </div>
 
               {/* Revenue Chart */}
-              <div className="rounded-lg bg-white p-6 shadow dark:bg-gray-800">
-                <h2 className="mb-4 text-lg font-medium text-gray-900 dark:text-white">Monthly Revenue</h2>
-                <div className="h-80">
-                  {isLoading ? (
-                    <div className="flex h-full items-center justify-center">
-                      <p className="text-gray-500 dark:text-gray-400">Loading data...</p>
-                    </div>
-                  ) : (
-                    <ResponsiveContainer width="100%" height="100%">
-                      <BarChart
-                        data={revenueData}
-                        margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-                      >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
-                        <YAxis />
-                        <Tooltip formatter={(value) => [`₹${value.toLocaleString()}`, 'Revenue']} />
-                        <Legend />
-                        <Bar dataKey="revenue" name="Revenue (₹)" fill="#10b981" />
-                      </BarChart>
-                    </ResponsiveContainer>
-                  )}
+              <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white shadow-md transition-all hover:shadow-lg dark:border-gray-700 dark:bg-gray-800">
+                <div className="absolute top-0 h-1 w-full bg-gradient-to-r from-indigo-600 to-purple-600"></div>
+                <div className="p-6">
+                  <h2 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Monthly Revenue</h2>
+                  <div className="h-80">
+                    {isLoading ? (
+                      <div className="flex h-full items-center justify-center">
+                        <p className="text-gray-500 dark:text-gray-400">Loading data...</p>
+                      </div>
+                    ) : (
+                      <ResponsiveContainer width="100%" height="100%">
+                        <BarChart
+                          data={revenueData}
+                          margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                        >
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis dataKey="name" />
+                          <YAxis />
+                          <Tooltip formatter={(value) => [`₹${value.toLocaleString()}`, 'Revenue']} />
+                          <Legend />
+                          <Bar dataKey="revenue" name="Revenue (₹)" fill="#a855f7" />
+                        </BarChart>
+                      </ResponsiveContainer>
+                    )}
+                  </div>
                 </div>
               </div>
 
               {/* Room Type Distribution */}
-              <div className="rounded-lg bg-white p-6 shadow dark:bg-gray-800">
-                <h2 className="mb-4 text-lg font-medium text-gray-900 dark:text-white">Room Type Distribution</h2>
-                <div className="h-80">
-                  {isLoading ? (
-                    <div className="flex h-full items-center justify-center">
-                      <p className="text-gray-500 dark:text-gray-400">Loading data...</p>
-                    </div>
-                  ) : roomTypeData.length > 0 ? (
-                    <ResponsiveContainer width="100%" height="100%">
-                      <PieChart>
-                        <Pie
-                          data={roomTypeData}
-                          cx="50%"
-                          cy="50%"
-                          labelLine={true}
-                          label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                          outerRadius={80}
-                          fill="#8884d8"
-                          dataKey="value"
-                        >
-                          {roomTypeData.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                          ))}
-                        </Pie>
-                        <Tooltip />
-                        <Legend />
-                      </PieChart>
-                    </ResponsiveContainer>
-                  ) : (
-                    <div className="flex h-full items-center justify-center">
-                      <p className="text-gray-500 dark:text-gray-400">No room data available</p>
-                    </div>
-                  )}
+              <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white shadow-md transition-all hover:shadow-lg dark:border-gray-700 dark:bg-gray-800">
+                <div className="absolute top-0 h-1 w-full bg-gradient-to-r from-indigo-600 to-purple-600"></div>
+                <div className="p-6">
+                  <h2 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Room Type Distribution</h2>
+                  <div className="h-80">
+                    {isLoading ? (
+                      <div className="flex h-full items-center justify-center">
+                        <p className="text-gray-500 dark:text-gray-400">Loading data...</p>
+                      </div>
+                    ) : roomTypeData.length > 0 ? (
+                      <ResponsiveContainer width="100%" height="100%">
+                        <PieChart>
+                          <Pie
+                            data={roomTypeData}
+                            cx="50%"
+                            cy="50%"
+                            labelLine={true}
+                            label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                            outerRadius={80}
+                            fill="#8884d8"
+                            dataKey="value"
+                          >
+                            {roomTypeData.map((entry, index) => (
+                              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                            ))}
+                          </Pie>
+                          <Tooltip />
+                          <Legend />
+                        </PieChart>
+                      </ResponsiveContainer>
+                    ) : (
+                      <div className="flex h-full items-center justify-center">
+                        <p className="text-gray-500 dark:text-gray-400">No room data available</p>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
 
               {/* Recent Activity */}
-              <div className="rounded-lg bg-white p-6 shadow dark:bg-gray-800">
-                <h2 className="mb-4 text-lg font-medium text-gray-900 dark:text-white">Recent Activity</h2>
-                {isLoading ? (
-                  <div className="flex h-40 items-center justify-center">
-                    <p className="text-gray-500 dark:text-gray-400">Loading activities...</p>
-                  </div>
-                ) : recentActivities.length > 0 ? (
-                  <div className="space-y-4">
-                    {recentActivities.map((activity, index) => (
-                      <div key={index} className="flex items-start">
-                        <div className={`mr-4 h-10 w-10 flex-shrink-0 rounded-full flex items-center justify-center
-                          ${activity.type === 'tenant' ? 'bg-green-100 dark:bg-green-900' :
-                            activity.type === 'payment' ? 'bg-yellow-100 dark:bg-yellow-900' :
-                            'bg-blue-100 dark:bg-blue-900'}`}>
-                          <span className={
-                            activity.type === 'tenant' ? 'text-green-600 dark:text-green-300' :
-                            activity.type === 'payment' ? 'text-yellow-600 dark:text-yellow-300' :
-                            'text-blue-600 dark:text-blue-300'
-                          }>
-                            {activity.type === 'tenant' ? '👤' :
-                             activity.type === 'payment' ? '💰' : '🏠'}
-                          </span>
+              <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white shadow-md transition-all hover:shadow-lg dark:border-gray-700 dark:bg-gray-800">
+                <div className="absolute top-0 h-1 w-full bg-gradient-to-r from-indigo-600 to-purple-600"></div>
+                <div className="p-6">
+                  <h2 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Recent Activity</h2>
+                  {isLoading ? (
+                    <div className="flex h-40 items-center justify-center">
+                      <p className="text-gray-500 dark:text-gray-400">Loading activities...</p>
+                    </div>
+                  ) : recentActivities.length > 0 ? (
+                    <div className="space-y-4">
+                      {recentActivities.map((activity, index) => (
+                        <div key={index} className="flex items-start rounded-lg p-3 transition-colors hover:bg-gray-50 dark:hover:bg-gray-700/30">
+                          <div className={`mr-4 h-10 w-10 flex-shrink-0 rounded-full flex items-center justify-center
+                            ${activity.type === 'tenant' ? 'bg-gradient-to-br from-green-400/20 to-emerald-400/20 text-green-500 dark:text-green-400' :
+                              activity.type === 'payment' ? 'bg-gradient-to-br from-yellow-400/20 to-amber-400/20 text-yellow-500 dark:text-yellow-400' :
+                              'bg-gradient-to-br from-blue-400/20 to-indigo-400/20 text-blue-500 dark:text-blue-400'}`}>
+                            <span>
+                              {activity.type === 'tenant' ? '👤' :
+                               activity.type === 'payment' ? '💰' : '🏠'}
+                            </span>
+                          </div>
+                          <div>
+                            <p className="text-sm font-medium text-gray-900 dark:text-white">{activity.title}</p>
+                            <p className="text-sm text-gray-500 dark:text-gray-400">{activity.description}</p>
+                            <p className="text-xs text-gray-400 dark:text-gray-500">{activity.time}</p>
+                          </div>
                         </div>
-                        <div>
-                          <p className="text-sm font-medium text-gray-900 dark:text-white">{activity.title}</p>
-                          <p className="text-sm text-gray-500 dark:text-gray-400">{activity.description}</p>
-                          <p className="text-xs text-gray-400 dark:text-gray-500">{activity.time}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="flex h-40 items-center justify-center">
-                    <p className="text-gray-500 dark:text-gray-400">No recent activities</p>
-                  </div>
-                )}
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="flex h-40 items-center justify-center">
+                      <p className="text-gray-500 dark:text-gray-400">No recent activities</p>
+                    </div>
+                  )}
+                </div>
               </div>
             </>
           ) : (
             // User Charts
             <>
               {/* User Information */}
-              <div className="rounded-lg bg-white p-6 shadow dark:bg-gray-800">
-                <h2 className="mb-4 text-lg font-medium text-gray-900 dark:text-white">Your Information</h2>
-                {isLoading ? (
-                  <div className="flex h-40 items-center justify-center">
-                    <p className="text-gray-500 dark:text-gray-400">Loading data...</p>
-                  </div>
-                ) : userTenant ? (
-                  <div className="space-y-4">
-                    <div className="flex items-center">
-                      <div className="mr-4 h-16 w-16 flex-shrink-0 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-400 text-2xl font-bold">
-                        {userTenant.name.charAt(0).toUpperCase()}
-                      </div>
-                      <div>
-                        <h3 className="text-xl font-medium text-gray-900 dark:text-white">{userTenant.name}</h3>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">{userTenant.email}</p>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">{userTenant.phone}</p>
-                      </div>
+              <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white shadow-md transition-all hover:shadow-lg dark:border-gray-700 dark:bg-gray-800">
+                <div className="absolute top-0 h-1 w-full bg-gradient-to-r from-indigo-600 to-purple-600"></div>
+                <div className="p-6">
+                  <h2 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Your Information</h2>
+                  {isLoading ? (
+                    <div className="flex h-40 items-center justify-center">
+                      <p className="text-gray-500 dark:text-gray-400">Loading data...</p>
                     </div>
+                  ) : userTenant ? (
+                    <div className="space-y-4">
+                      <div className="flex items-center">
+                        <div className="mr-4 h-16 w-16 flex-shrink-0 rounded-full bg-gradient-to-br from-indigo-500/20 to-purple-500/20 flex items-center justify-center text-indigo-600 dark:text-indigo-400 text-2xl font-bold">
+                          {userTenant.name.charAt(0).toUpperCase()}
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-medium text-gray-900 dark:text-white">{userTenant.name}</h3>
+                          <p className="text-sm text-gray-500 dark:text-gray-400">{userTenant.email}</p>
+                          <p className="text-sm text-gray-500 dark:text-gray-400">{userTenant.phone}</p>
+                        </div>
+                      </div>
 
-                    <div className="border-t border-gray-200 pt-4 dark:border-gray-700">
-                      <h4 className="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Lease Information</h4>
-                      <div className="grid grid-cols-2 gap-4">
-                        <div>
-                          <p className="text-xs text-gray-500 dark:text-gray-400">Lease Start</p>
-                          <p className="text-sm font-medium text-gray-900 dark:text-white">
-                            {new Date(userTenant.leaseStart).toLocaleDateString()}
-                          </p>
-                        </div>
-                        <div>
-                          <p className="text-xs text-gray-500 dark:text-gray-400">Lease End</p>
-                          <p className="text-sm font-medium text-gray-900 dark:text-white">
-                            {new Date(userTenant.leaseEnd).toLocaleDateString()}
-                          </p>
+                      <div className="border-t border-gray-200 pt-4 dark:border-gray-700">
+                        <h4 className="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Lease Information</h4>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="rounded-lg bg-gray-50 p-3 dark:bg-gray-700/30">
+                            <p className="text-xs text-gray-500 dark:text-gray-400">Lease Start</p>
+                            <p className="text-sm font-medium text-gray-900 dark:text-white">
+                              {new Date(userTenant.leaseStart).toLocaleDateString()}
+                            </p>
+                          </div>
+                          <div className="rounded-lg bg-gray-50 p-3 dark:bg-gray-700/30">
+                            <p className="text-xs text-gray-500 dark:text-gray-400">Lease End</p>
+                            <p className="text-sm font-medium text-gray-900 dark:text-white">
+                              {new Date(userTenant.leaseEnd).toLocaleDateString()}
+                            </p>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ) : (
-                  <div className="flex h-40 items-center justify-center">
-                    <p className="text-gray-500 dark:text-gray-400">No tenant information available</p>
-                  </div>
-                )}
+                  ) : (
+                    <div className="flex h-40 items-center justify-center">
+                      <p className="text-gray-500 dark:text-gray-400">No tenant information available</p>
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* Payment History */}
-              <div className="rounded-lg bg-white p-6 shadow dark:bg-gray-800">
-                <h2 className="mb-4 text-lg font-medium text-gray-900 dark:text-white">Recent Payments</h2>
-                {isLoading ? (
-                  <div className="flex h-40 items-center justify-center">
-                    <p className="text-gray-500 dark:text-gray-400">Loading payments...</p>
-                  </div>
-                ) : userPayments && userPayments.length > 0 ? (
-                  <div className="space-y-4">
-                    {userPayments.slice(0, 5).map((payment, index) => (
-                      <div key={index} className="flex items-start">
-                        <div className="mr-4 h-10 w-10 flex-shrink-0 rounded-full bg-green-100 flex items-center justify-center text-green-600 dark:bg-green-900/30 dark:text-green-400">
-                          <span>💰</span>
-                        </div>
-                        <div>
-                          <div className="flex items-center">
-                            <p className="text-sm font-medium text-gray-900 dark:text-white">₹{payment.amount}</p>
-                            <span className={`ml-2 rounded-full px-2 py-0.5 text-xs font-medium
-                              ${payment.status === 'PAID' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400' :
-                                payment.status === 'PENDING' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400' :
-                                payment.status === 'WAITING_APPROVAL' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400' :
-                                'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'
-                              }`}
-                            >
-                              {payment.status.replace('_', ' ')}
-                            </span>
-                          </div>
-                          <p className="text-sm text-gray-500 dark:text-gray-400">{payment.paymentType.replace('_', ' ')}</p>
-                          <p className="text-xs text-gray-400 dark:text-gray-500">
-                            {new Date(payment.paymentDate).toLocaleDateString()}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-
-                    <div className="pt-2 text-center">
-                      <a href="/payments" className="text-sm font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">
-                        View all payments →
-                      </a>
+              <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white shadow-md transition-all hover:shadow-lg dark:border-gray-700 dark:bg-gray-800">
+                <div className="absolute top-0 h-1 w-full bg-gradient-to-r from-indigo-600 to-purple-600"></div>
+                <div className="p-6">
+                  <h2 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Recent Payments</h2>
+                  {isLoading ? (
+                    <div className="flex h-40 items-center justify-center">
+                      <p className="text-gray-500 dark:text-gray-400">Loading payments...</p>
                     </div>
-                  </div>
-                ) : (
-                  <div className="flex h-40 items-center justify-center">
-                    <p className="text-gray-500 dark:text-gray-400">No payment history available</p>
-                  </div>
-                )}
+                  ) : userPayments && userPayments.length > 0 ? (
+                    <div className="space-y-4">
+                      {userPayments.slice(0, 5).map((payment, index) => (
+                        <div key={index} className="flex items-start rounded-lg p-3 transition-colors hover:bg-gray-50 dark:hover:bg-gray-700/30">
+                          <div className="mr-4 h-10 w-10 flex-shrink-0 rounded-full bg-gradient-to-br from-green-400/20 to-emerald-400/20 flex items-center justify-center text-green-600 dark:text-green-400">
+                            <span>💰</span>
+                          </div>
+                          <div>
+                            <div className="flex items-center">
+                              <p className="text-sm font-medium text-gray-900 dark:text-white">₹{payment.amount}</p>
+                              <span className={`ml-2 rounded-full px-2 py-0.5 text-xs font-medium
+                                ${payment.status === 'PAID' ? 'bg-gradient-to-r from-green-500/10 to-emerald-500/10 text-green-800 dark:text-green-400' :
+                                  payment.status === 'PENDING' ? 'bg-gradient-to-r from-yellow-500/10 to-amber-500/10 text-yellow-800 dark:text-yellow-400' :
+                                  payment.status === 'WAITING_APPROVAL' ? 'bg-gradient-to-r from-blue-500/10 to-indigo-500/10 text-blue-800 dark:text-blue-400' :
+                                  'bg-gradient-to-r from-red-500/10 to-rose-500/10 text-red-800 dark:text-red-400'
+                                }`}
+                              >
+                                {payment.status.replace('_', ' ')}
+                              </span>
+                            </div>
+                            <p className="text-sm text-gray-500 dark:text-gray-400">{payment.paymentType.replace('_', ' ')}</p>
+                            <p className="text-xs text-gray-400 dark:text-gray-500">
+                              {new Date(payment.paymentDate).toLocaleDateString()}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+
+                      <div className="pt-2 text-center">
+                        <a href="/payments" className="inline-flex items-center rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-all hover:from-indigo-700 hover:to-purple-700">
+                          View all payments
+                          <svg className="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                          </svg>
+                        </a>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex h-40 items-center justify-center">
+                      <p className="text-gray-500 dark:text-gray-400">No payment history available</p>
+                    </div>
+                  )}
+                </div>
               </div>
             </>
           )}
